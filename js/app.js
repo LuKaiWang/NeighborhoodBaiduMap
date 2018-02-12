@@ -1,26 +1,30 @@
-$(document).ready(function () {
-  // 百度地图初始化
-  let map = new BMap.Map("container");
-  // 创建地图实例
-  let point = new BMap.Point(116.404, 39.915);
-  // 创建点坐标
-  map.centerAndZoom(point, 15);
-  // 初始化地图，设置中心点坐标和地图级别
-  map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
-  map.addControl(new BMap.NavigationControl());
-  map.addControl(new BMap.ScaleControl());
-  map.addControl(new BMap.OverviewMapControl());
-  map.addControl(new BMap.MapTypeControl());
-  map.setCurrentCity("北京"); // 仅当设置城市信息时，MapTypeControl的切换功能才能可用
-  // knockout部分
-  function AppViewModel() {
-    this.clickCount = ko.observable(0);
-    this.name=ko.observable("www");
-    this.incrementCounter = function(){
-      this.clickCount(this.clickCount() +1);
-    }
-  }
+let map;
+function initMap() {
+    //
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 18.7,
+            lng: 110.2
+        },
+        zoom: 12
+    });
+    let tribeca = {
+        lat: 18.7,
+        lng: 110.2
+    };
+    let marker = new google.maps.Marker({
+        position: tribeca,
+        map: map,
+        title: 'First marker'
+    });
+    let infoWindow = new google.maps.InfoWindow({
+        content: "hahahahahaha!!!!"
+    });
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker);
+    })
+}
 
-  // Activates knockout.js
-  ko.applyBindings(new AppViewModel());
+$(document).ready(function () {
+
 });
