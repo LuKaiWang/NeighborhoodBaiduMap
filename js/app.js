@@ -1,30 +1,40 @@
 let map;
+
 function initMap() {
     //
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 18.7,
-            lng: 110.2
+            lat: -34.397,
+            lng: 150.644
         },
-        zoom: 12
+        zoom: 8
     });
-    let tribeca = {
-        lat: 18.7,
-        lng: 110.2
+    let sydney = {
+        lat: -34.397,
+        lng: 150.644
     };
     let marker = new google.maps.Marker({
-        position: tribeca,
+        position: sydney,
         map: map,
         title: 'First marker'
     });
     let infoWindow = new google.maps.InfoWindow({
-        content: "hahahahahaha!!!!"
+        content: "悉尼"
     });
     marker.addListener('click', function () {
         infoWindow.open(map, marker);
     })
 }
 
-$(document).ready(function () {
+function WebmailViewModel() {
+    // Data
+    var self = this;
+    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    self.chosenFolderId = ko.observable();
 
-});
+    // Behaviours
+    self.goToFolder = function(folder) { self.chosenFolderId(folder); };
+};
+
+ko.applyBindings(new WebmailViewModel());
+$(document).ready(function () {});
