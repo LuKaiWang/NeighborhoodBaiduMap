@@ -6,8 +6,6 @@ function initMap(){
     map.enableScrollWheelZoom();
     //开启鼠标滚动缩放功能
     map.centerAndZoom(point, 15);
-    
-    
 
     var marker = new BMap.Marker(point);
     marker.enableDragging();
