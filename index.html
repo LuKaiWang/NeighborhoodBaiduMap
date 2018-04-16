@@ -14,25 +14,33 @@
 <body>
   <div class="container-fluid h100">
     <div class="row h100" id="main">
-      <div id="left" class="collapse show col-lg-2 bg-dark">
+      <div id="left" class="collapse show col-lg-2 col-sm-5 col-6 bg-dark">
+        <!-- title -->
         <h3 class="h3title">BlockMap</h3>
+        <!-- input -->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <input data-bind="value: keyWords" type="text" class="form-control">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-                <i class="fa fa-filter fa-2x"></i>
+            <button data-bind="click: addressSearch" class="btn btn-primary" type="button">
+              <i class="fa fa-filter fa-2x"></i>
             </button>
           </div>
         </div>
+        <!-- address list -->
+        <ul class="list-group" data-bind="foreach: address">
+            <li class="list-group-item" data-bind="text: title"></li>
+        </ul>
 
       </div>
-      <div id="right" class="col-lg-10">
-        <div class="row bg-dark">
+      <div id="right" class="col-lg-10 col-sm-7 col-6">
+        <!-- top bar -->
+        <div class="row h05 bg-dark">
           <a href="javascript:void(0)" class="btn btn-dark" onclick="filterToggle()">
             <i class="fa fa-reorder fa-2x"></i>
           </a>
         </div>
-        <div class="row h100">
+        <!-- map -->
+        <div class="row h95">
           <div id="map"></div>
         </div>
       </div>

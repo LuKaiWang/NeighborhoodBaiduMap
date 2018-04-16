@@ -1,6 +1,6 @@
 /* Optional: Makes the sample page fill the window. */
 #map{
-  height: 100%;
+  height:100%;
   width:100%;
 }
 html, body {
@@ -11,8 +11,17 @@ html, body {
 .h100{
   height: 100%;
 }
+.h05{
+  height:5%;
+}
+.h95{
+  height:95%;
+}
 #left{
   padding-top:10px;
+  overflow-x:hidden;
+  overflow-y:auto;
+  height: 100%;
 }
 .h3title{
   color:white;

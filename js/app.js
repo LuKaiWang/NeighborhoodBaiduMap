@@ -1,30 +1,67 @@
-// 创建地图实例  
-const map = new BMap.Map("map");
+const addressCapacity = 30; //地点数量
+let markerArray = [];
 /**
  * @description  添加地点标记
  * @param {BMap.point} point
  */
-function addMarker(point) {
-    var marker = new BMap.Marker(point);
+function addMarker(address, map) {
+    let marker = new BMap.Marker(address.point);
+    let opts = {
+        width: 200, // 信息窗口宽度    
+        height: 70, // 信息窗口高度    
+        title: address.title, // 信息窗口标题
+        offset: new BMap.Size(0, -12) //信息窗口偏移值
+    }
+    //监听事件--点击marker打开信息窗口
+    marker.addEventListener("click", function () {
+        let infoWindow = new BMap.InfoWindow(address.address, opts); // 创建信息窗口对象    
+        map.openInfoWindow(infoWindow, address.point); // 打开信息窗口
+    });
+    //加载marker
     map.addOverlay(marker);
+    // console.log(marker.point);
+    // marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    // map.removeOverlay(marker);
 }
 /**
  * @description 初始化地图
  */
 function initMap() {
-    // 创建点坐标  
-    let point = new BMap.Point(116.404, 39.915);
-    //开启鼠标滚动缩放功能
-    map.enableScrollWheelZoom();
-    map.addControl(new BMap.NavigationControl());
-    map.centerAndZoom(point, 15);
-    // addMarker(point);
-    let local = new BMap.LocalSearch(map, {
-        renderOptions: {
-            map: map
-        }
+    new Promise(function (resolve, reject) {
+        let self = this;
+        const map = new BMap.Map("map"); // 创建地图实例  
+        // 创建点坐标  北京天安门
+        let point = new BMap.Point(116.404, 39.915);
+        //开启鼠标滚动缩放功能
+        map.enableScrollWheelZoom();
+        map.addControl(new BMap.NavigationControl());
+        map.centerAndZoom(point, 12);
+        // addMarker(point);
+        //回调函数，获取数据结果
+        const options = {
+            onSearchComplete: function (results) {
+                if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+                    console.log(typeof(results.zr));
+                    ko.applyBindings(new addressVM(results.zr));
+                    results.zr.map((address) => {
+                        addMarker(address, map)
+                    });
+                } else {
+                    alert("获取数据失败！");
+                }
+            },
+            pageCapacity: addressCapacity
+        };
+        let local = new BMap.LocalSearch(map, options);
+        local.search("学校");
+        resolve("markerArray");
+    }).then(function(p){
+        console.log(p);
+    }).catch(function(reason){
+        alert("地图加载失败！");
     });
-    local.search("学校");
+
+
 }
 /**
  * @description 主页侧边栏显示隐藏
@@ -34,15 +71,13 @@ function filterToggle() {
     if ($("div#left").hasClass("show")) {
         $("div#left").removeClass("show");
         $("div#right").removeClass();
-        $("div#right").addClass("col-lg-12");
+        $("div#right").addClass("col-lg-12 col-sm-12 col-12");
     } else { //侧边栏处于隐藏状态则显示
         $("div#right").removeClass();
-        $("div#right").addClass("col-lg-10");
+        $("div#right").addClass("col-lg-10 col-sm-7 col-6");
         $("div#left").addClass("show");
     }
-    // const left = documentGetElementById("#left");
 }
-// let map;
 
 // function initMap() {
 //     //
@@ -81,6 +116,22 @@ function filterToggle() {
 // };
 
 // ko.applyBindings(new WebmailViewModel());
+
+/**
+ * @description addressVM 地址列表控制器
+ */
+function addressVM(data) {
+    let self = this;
+    this.showList = data.map(data=> {return {title:data.title}});
+    this.keyWords = ko.observable();
+    self.address = ko.observableArray(self.showList);
+    this.addressSearch = function () {
+        console.log(self.keyWords());
+    };
+    // console.log(self.showList);
+}
+
+
 /**
  * @description jquery调用初始化页面
  */
