@@ -26,3 +26,9 @@ html, body {
 .h3title{
   color:white;
 }
+li:hover{
+  background-color: powderblue;
+}
+li{
+  cursor: default;
+}

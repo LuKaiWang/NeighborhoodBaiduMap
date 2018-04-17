@@ -21,14 +21,14 @@
         <div class="input-group mb-3">
           <input data-bind="value: keyWords" type="text" class="form-control">
           <div class="input-group-append">
-            <button data-bind="click: addressSearch" class="btn btn-primary" type="button">
+            <button data-bind="click: addressfilter" class="btn btn-primary" type="button">
               <i class="fa fa-filter fa-2x"></i>
             </button>
           </div>
         </div>
         <!-- address list -->
         <ul class="list-group" data-bind="foreach: address">
-            <li class="list-group-item" data-bind="text: title"></li>
+            <li class="list-group-item" data-bind="text: title,click:$root.showPoint"></li>
         </ul>
 
       </div>
