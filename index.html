@@ -14,29 +14,29 @@
 <body>
   <div class="container-fluid h100">
     <div class="row h100" id="main">
-      <div id="left" class="collapse show col-lg-2 col-sm-5 col-6 bg-dark">
+      <div data-bind="css:{'show' : showSidebar}" id="left" class="collapse show col-lg-2 col-sm-5 col-6 bg-dark">
         <!-- title -->
         <h3 class="h3title">BlockMap</h3>
         <!-- input -->
         <div class="input-group mb-3">
-          <input data-bind="value: keyWords" type="text" class="form-control">
+          <input data-bind="textInput: keyWords" type="text" class="form-control">
           <div class="input-group-append">
-            <button data-bind="click: addressfilter" class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="button">
               <i class="fa fa-filter fa-2x"></i>
             </button>
           </div>
         </div>
         <!-- address list -->
         <ul class="list-group" data-bind="foreach: address">
-            <li class="list-group-item" data-bind="text: title,click:$root.showPoint"></li>
+          <li class="list-group-item" data-bind="text: title,click:$root.showPoint"></li>
         </ul>
 
       </div>
-      <div id="right" class="col-lg-10 col-sm-7 col-6">
+      <div data-bind="css:{'col-lg-10':showSidebar,'col-sm-7':showSidebar,'col-6':showSidebar,'col-lg-12':!showSidebar(), 'col-sm-12':!showSidebar(), 'col-12':!showSidebar()}" id="right" class="col-lg-10 col-sm-7 col-6">
         <!-- top bar -->
         <div class="row h05 bg-dark">
-          <a href="javascript:void(0)" class="btn btn-dark" onclick="filterToggle()">
-            <i class="fa fa-reorder fa-2x"></i>
+          <a href="javascript:void(0)" class="btn btn-dark">
+            <i data-bind="click:sidebarToggle" class="fa fa-reorder fa-2x"></i>
           </a>
         </div>
         <!-- map -->

@@ -1,34 +1,44 @@
 /* Optional: Makes the sample page fill the window. */
-#map{
-  height:100%;
-  width:100%;
+
+#map {
+  height: 100%;
+  width: 100%;
 }
-html, body {
+
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-.h100{
+
+.h100 {
   height: 100%;
 }
-.h05{
-  height:5%;
+
+.h05 {
+  height: 5%;
 }
-.h95{
-  height:95%;
+
+.h95 {
+  height: 95%;
 }
-#left{
-  padding-top:10px;
-  overflow-x:hidden;
-  overflow-y:auto;
+
+#left {
+  padding-top: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
 }
-.h3title{
-  color:white;
+
+.h3title {
+  color: white;
 }
-li:hover{
+
+li:hover {
   background-color: powderblue;
 }
-li{
+
+li {
   cursor: default;
 }
